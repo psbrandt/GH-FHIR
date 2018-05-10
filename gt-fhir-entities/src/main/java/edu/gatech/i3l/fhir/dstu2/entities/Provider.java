@@ -57,7 +57,7 @@ public class Provider extends BaseResourceEntity {
 	public static final String RESOURCE_TYPE = "Practitioner";
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="provider_seq_gen")
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="provider_seq_gen")
 	@SequenceGenerator(name="provider_seq_gen", sequenceName="provider_id_seq", allocationSize=1)
 
 	@Column(name="provider_id")

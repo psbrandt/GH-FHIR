@@ -73,7 +73,7 @@ public class Observation extends BaseResourceEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "person_id", nullable = false)
 	@NotNull
-	private PersonComplement person;
+	private Person person;
 
 	@ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "observation_concept_id", nullable = false)
@@ -139,7 +139,7 @@ public class Observation extends BaseResourceEntity {
 		super();
 	}
 
-	public Observation(Long id, PersonComplement person, Concept observationConcept, Date date, String time, String valueAsString,
+	public Observation(Long id, Person person, Concept observationConcept, Date date, String time, String valueAsString,
 			BigDecimal valueAsNumber, Concept valueAsConcept, /*Concept relevantCondition,*/ Concept type,
 			Provider provider, VisitOccurrence visitOccurrence, String sourceValue, Concept unit,
 			String unitsSourceValue) {
@@ -193,11 +193,11 @@ public class Observation extends BaseResourceEntity {
 		this.rangeHigh = rangeHigh;
 	}
 
-	public PersonComplement getPerson() {
+	public Person getPerson() {
 		return person;
 	}
 
-	public void setPerson(PersonComplement person) {
+	public void setPerson(Person person) {
 		this.person = person;
 	}
 
@@ -330,7 +330,7 @@ public class Observation extends BaseResourceEntity {
 		IdDt reference = observation.getSubject().getReference();
 		if (reference.getIdPartAsLong() != null) {
 			if ("Patient".equals(reference.getResourceType())) {
-				this.person = new PersonComplement();
+				this.person = new Person();
 				this.person.setId(reference.getIdPartAsLong());
 			} else if ("Group".equals(reference.getResourceType())) {
 				//

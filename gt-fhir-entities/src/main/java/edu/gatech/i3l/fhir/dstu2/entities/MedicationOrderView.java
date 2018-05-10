@@ -52,7 +52,7 @@ public final class MedicationOrderView extends DrugExposure {
 	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "person_id", nullable = false)
 	@NotNull
-	private PersonComplement person;
+	private Person person;
 
 	/**
 	 * For this entity, drug type (name of the concept) is Prescription Written;
@@ -143,11 +143,11 @@ public final class MedicationOrderView extends DrugExposure {
 	 * ******************************** END ATTRIBUTES FOR DISPENSE
 	 ********************************/
 
-	public PersonComplement getPerson() {
+	public Person getPerson() {
 		return person;
 	}
 
-	public void setPerson(PersonComplement person) {
+	public void setPerson(Person person) {
 		this.person = person;
 	}
 
@@ -386,7 +386,7 @@ public final class MedicationOrderView extends DrugExposure {
 		if (patientResource == null) return null; // We have to have a patient
 		
 //		Long patientRef = patientResource.getReference().getIdPartAsLong();
-		PersonComplement person = PersonComplement.searchAndUpdate(patientResource);
+		Person person = Person.searchAndUpdate(patientResource);
 		if (person == null) return null; // We must have a patient
 		
 		this.setPerson(person);
@@ -411,18 +411,18 @@ public final class MedicationOrderView extends DrugExposure {
 		
 
 //		if (patientRef != null) {
-//			PersonComplement person = (PersonComplement) OmopConceptMapping.getInstance()
-//					.loadEntityById(PersonComplement.class, patientRef);
+//			Person person = (Person) OmopConceptMapping.getInstance()
+//					.loadEntityById(Person.class, patientRef);
 //			if (person != null) {
 //				this.setPerson(person);
 //			} else {
 //				// See if we have already received this.
-//				person = (PersonComplement) OmopConceptMapping.getInstance()
-//						.loadEntityBySource(PersonComplement.class, "PersonComplement", "personSourceValue", patientRef.toString());
+//				person = (Person) OmopConceptMapping.getInstance()
+//						.loadEntityBySource(Person.class, "Person", "personSourceValue", patientRef.toString());
 //				if (person != null) {
 //					this.setPerson(person);
 //				} else {
-//					this.person = new PersonComplement();
+//					this.person = new Person();
 //					this.person.setPersonSourceValue(patientRef.toString());
 //				}
 //			}

@@ -17,7 +17,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import edu.gatech.i3l.fhir.dstu2.entities.Concept;
 import edu.gatech.i3l.fhir.dstu2.entities.Location;
-import edu.gatech.i3l.fhir.dstu2.entities.PersonComplement;
+import edu.gatech.i3l.fhir.dstu2.entities.Person;
 import edu.gatech.i3l.fhir.jpa.dao.BaseFhirDao;
 import edu.gatech.i3l.fhir.jpa.entity.BaseResourceEntity;
 
@@ -176,11 +176,11 @@ public class OmopConceptMapping implements Runnable {
 //		return (String) query.getSingleResult();
 	}
 	
-	public Long getPersonByNameAndLocation(PersonComplement person, Location location) {
+	public Long getPersonByNameAndLocation(Person person, Location location) {
 		if (person == null) return null;
 		
 //		String queryString = "SELECT p.person_id FROM PERSON p join f_person f on p.person_id = f.person_id join location l on p.location_id = l.location_id where";
-		String queryString = "SELECT p FROM PersonComplement p WHERE";
+		String queryString = "SELECT p FROM Person p WHERE";
 		String family_name = person.getFamilyName();
 		String given1_name = person.getGivenName1();
 		String given2_name = person.getGivenName2();
@@ -238,7 +238,7 @@ public class OmopConceptMapping implements Runnable {
 
 		System.out.println("Query for Person"+queryString);
 		
-		TypedQuery<? extends BaseResourceEntity> query = entityManager.createQuery(queryString, PersonComplement.class);
+		TypedQuery<? extends BaseResourceEntity> query = entityManager.createQuery(queryString, Person.class);
 		if (family_name != null) query = query.setParameter("fname", family_name);
 		if (given1_name != null) query = query.setParameter("gname1", given1_name);
 		if (given2_name != null) query = query.setParameter("gname2", given2_name);
@@ -252,7 +252,7 @@ public class OmopConceptMapping implements Runnable {
 		System.out.println("family:"+family_name+" gname1:"+given1_name+" gname2"+given2_name);
 		List<? extends BaseResourceEntity> results = query.getResultList();
 		if (results.size() > 0) {
-			PersonComplement person_c = (PersonComplement) results.get(0);
+			Person person_c = (Person) results.get(0);
 			return person_c.getId();
 		} else
 			return null;

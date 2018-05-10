@@ -21,7 +21,7 @@ public class SmartLaunchContext implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="smart_launch_context_launch_id_gen")
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="smart_launch_context_launch_id_gen")
 	@SequenceGenerator(name="smart_launch_context_launch_id_gen", sequenceName="smart_launch_context_seq", allocationSize=1)
 	@Column(name="launch_id")
 	private Long launchId;

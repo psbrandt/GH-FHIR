@@ -35,7 +35,7 @@ public class Location extends BaseResourceEntity {
 	public static final String DATA_TYPE = "AddressDt";
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="location_seq_gen")
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="location_seq_gen")
 	@SequenceGenerator(name="location_seq_gen", sequenceName="location_id_seq", allocationSize=1)
 	@Column(name="location_id")
 	@Access(AccessType.PROPERTY)

@@ -29,7 +29,7 @@
 		<class>edu.gatech.i3l.fhir.dstu2.entities.OmopObservation</class>
 <!-- 		<class>edu.gatech.i3l.fhir.dstu2.entities.Organization</class> -->
 		<class>edu.gatech.i3l.fhir.dstu2.entities.Person</class>
-		<class>edu.gatech.i3l.fhir.dstu2.entities.PersonComplement</class>
+		<!-- <class>edu.gatech.i3l.fhir.dstu2.entities.PersonComplement</class> -->
 		<class>edu.gatech.i3l.fhir.dstu2.entities.ProcedureOccurrence</class>
 		<class>edu.gatech.i3l.fhir.dstu2.entities.Provider</class>
 <!-- 		<class>edu.gatech.i3l.fhir.dstu2.entities.ProviderComplement</class> -->
@@ -43,14 +43,24 @@
 		
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<!-- <property name="hibernate.hbm2ddl.auto" value="none" />
 			<property name="hibernate.jdbc.batch_size" value="0" />
 			<property name="hibernate.cache.use_minimal_puts" value="false" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.cache.use_query_cache" value="false" />
 			<property name="hibernate.cache.use_second_level_cache" value="false" />
-			<property name="hibernate.cache.use_structured_entries" value="false" />
+			<property name="hibernate.cache.use_structured_entries" value="false" /> -->
 			<!-- <property name="org.hibernate.envers.audit_strategy" value="org.hibernate.envers.strategy.ValidityAuditStrategy"/> -->
+
+			<property name="hibernate.connection.url" value="jdbc:sqlserver://ITS-AM-ITHS;databaseName=uzOMOP;integratedSecurity=true;" />
+			<property name="hibernate.connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+			<property name="hibernate.hbm2ddl.auto" value="none" />
+			<property name="hibernate.connection.username" value="sa" />
+			<property name="hibernate.connection.password" value="lel" />
+			<property name="hibernate.default_schema" value="OMOP" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
+			<property name="hibernate.show_sql" value="true" />
+
 		</properties>                                                    
 	</persistence-unit>
 </persistence>

@@ -48,7 +48,7 @@ public class ProcedureOccurrence extends BaseResourceEntity {
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "person_id", nullable = false)
 	@NotNull
-	private PersonComplement person;
+	private Person person;
 
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "procedure_concept_id")
@@ -92,7 +92,7 @@ public class ProcedureOccurrence extends BaseResourceEntity {
 		super();
 	}
 
-	public ProcedureOccurrence(Long id, PersonComplement person, Concept procedureConcept, Date date, Concept procedureTypeConcept,
+	public ProcedureOccurrence(Long id, Person person, Concept procedureConcept, Date date, Concept procedureTypeConcept,
 			Concept modifierConcept, Long quantity, Provider provider, VisitOccurrence visitOccurrence, 
 			String procedureSourceValue, Concept procedureSourceConcept, String qualifierSourceValue) {
 		super();
@@ -119,11 +119,11 @@ public class ProcedureOccurrence extends BaseResourceEntity {
 		this.id = id;
 	}
 
-	public PersonComplement getPerson() {
+	public Person getPerson() {
 		return person;
 	}
 
-	public void setPerson(PersonComplement person) {
+	public void setPerson(Person person) {
 		this.person = person;
 	}
 

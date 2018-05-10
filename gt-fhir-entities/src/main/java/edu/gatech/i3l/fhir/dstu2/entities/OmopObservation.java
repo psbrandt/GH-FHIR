@@ -46,7 +46,7 @@ public class OmopObservation extends BaseResourceEntity {
 	private static final String RES_TYPE = "Observation";
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="observation_occurrence_seq_gen")
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="observation_occurrence_seq_gen")
 	@SequenceGenerator(name="observation_occurrence_seq_gen", sequenceName="observation_occurrence_id_seq", allocationSize=1)
 	@Column(name = "observation_id")
 	@Access(AccessType.PROPERTY)
@@ -55,7 +55,7 @@ public class OmopObservation extends BaseResourceEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "person_id", nullable = false)
 	@NotNull
-	private PersonComplement person;
+	private Person person;
 
 	@ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "observation_concept_id", nullable = false)
@@ -120,11 +120,11 @@ public class OmopObservation extends BaseResourceEntity {
 		this.time = time;
 	}
 
-	public PersonComplement getPerson() {
+	public Person getPerson() {
 		return person;
 	}
 
-	public void setPerson(PersonComplement person) {
+	public void setPerson(Person person) {
 		this.person = person;
 	}
 
@@ -250,7 +250,7 @@ public class OmopObservation extends BaseResourceEntity {
 		ResourceReferenceDt subjectReference = obs.getSubject();
 		if (subjectReference != null) {
 			if ("Patient".equals(subjectReference.getReference().getResourceType())) {
-				PersonComplement person = PersonComplement.searchAndUpdate(subjectReference);
+				Person person = Person.searchAndUpdate(subjectReference);
 				if (person == null) return null; // We must have a patient
 				this.setPerson(person);
 			} else {

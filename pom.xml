@@ -268,7 +268,12 @@
 		</dependency>
 
 	</dependencies>
-
+<modules>
+<module>gt-fhir-jpabase</module>
+<module>gt-fhir-entities</module>
+<module>gt-fhir-overlay</module>
+<module>gt-fhir-webapp</module>
+</modules>
 	<build>
 		<pluginManagement>
 			<plugins>

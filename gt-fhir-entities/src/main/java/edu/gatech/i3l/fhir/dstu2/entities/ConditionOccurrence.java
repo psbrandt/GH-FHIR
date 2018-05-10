@@ -55,7 +55,7 @@ public class ConditionOccurrence extends BaseResourceEntity {
 	public static final String RESOURCE_TYPE = "Condition";
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="condition_occurrence_seq_gen")
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="condition_occurrence_seq_gen")
 	@SequenceGenerator(name="condition_occurrence_seq_gen", sequenceName="condition_occurrence_id_seq", allocationSize=1)
 	@Column(name="condition_occurrence_id")
 	@Access(AccessType.PROPERTY)
@@ -64,7 +64,7 @@ public class ConditionOccurrence extends BaseResourceEntity {
 	@ManyToOne(cascade={CascadeType.MERGE})
 	@JoinColumn(name="person_id", nullable=false)
 	@NotNull
-	private PersonComplement person;
+	private Person person;
 	
 	@ManyToOne(cascade={CascadeType.MERGE})
 	@JoinColumn(name="condition_concept_id", nullable=false)
@@ -112,7 +112,7 @@ public class ConditionOccurrence extends BaseResourceEntity {
 		super();
 	}
 
-	public ConditionOccurrence(Long id, PersonComplement person, Concept conditionConcept, Date startDate, Date endDate,
+	public ConditionOccurrence(Long id, Person person, Concept conditionConcept, Date startDate, Date endDate,
 			Concept conditionTypeConcept, String stopReason, Provider provider, VisitOccurrence encounter,
 			String sourceValue, Concept sourceConcept) {
 		super();
@@ -145,11 +145,11 @@ public class ConditionOccurrence extends BaseResourceEntity {
 		return RESOURCE_TYPE;
 	}
 
-	public PersonComplement getPerson() {
+	public Person getPerson() {
 		return person;
 	}
 
-	public void setPerson(PersonComplement person) {
+	public void setPerson(Person person) {
 		this.person = person;
 	}
 
@@ -235,14 +235,14 @@ public class ConditionOccurrence extends BaseResourceEntity {
 			if (patientResource == null) return null; // We have to have a patient
 			
 //			Long patientRef = patientResource.getReference().getIdPartAsLong();
-			PersonComplement person = PersonComplement.searchAndUpdate(patientResource);
+			Person person = Person.searchAndUpdate(patientResource);
 			if (person == null) return null; // We must have a patient
 			
 			this.setPerson(person);
 
 //			Long patientRef = condition.getPatient().getReference().getIdPartAsLong();
 //			if(patientRef != null){
-//				this.person =  new PersonComplement();
+//				this.person =  new Person();
 //				this.person.setId(patientRef);
 //			}
 			

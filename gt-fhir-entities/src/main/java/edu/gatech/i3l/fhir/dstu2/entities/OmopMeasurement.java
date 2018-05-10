@@ -47,7 +47,7 @@ public class OmopMeasurement extends BaseResourceEntity {
 	public static final Long DIASTOLIC_CONCEPT_ID = 3012888L;		
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="measurement_occurrence_seq_gen")
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="measurement_occurrence_seq_gen")
 	@SequenceGenerator(name="measurement_occurrence_seq_gen", sequenceName="measurement_occurrence_id_seq", allocationSize=1)
 	@Column(name = "measurement_id")
 	@Access(AccessType.PROPERTY)
@@ -56,7 +56,7 @@ public class OmopMeasurement extends BaseResourceEntity {
 	@ManyToOne(cascade={CascadeType.MERGE})
 	@JoinColumn(name="person_id", nullable=false)
 	@NotNull
-	private PersonComplement person;
+	private Person person;
 
 	@Column(name="measurement_source_value")
 	private String sourceValue; 
@@ -113,7 +113,7 @@ public class OmopMeasurement extends BaseResourceEntity {
 		return person;
 	}
 	
-	public void setPerson(PersonComplement person) {
+	public void setPerson(Person person) {
 		this.person = person;
 	}
 	
@@ -239,7 +239,7 @@ public class OmopMeasurement extends BaseResourceEntity {
 		ResourceReferenceDt subjectReference = obs.getSubject();
 		if (subjectReference != null) {
 			if ("Patient".equals(subjectReference.getReference().getResourceType())) {
-				PersonComplement person = PersonComplement.searchAndUpdate(subjectReference);
+				Person person = Person.searchAndUpdate(subjectReference);
 				if (person == null) return null; // We must have a patient
 				this.setPerson(person);
 			} else {

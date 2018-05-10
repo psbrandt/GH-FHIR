@@ -21,10 +21,14 @@
 	and other properties supported by BasicDataSource.
 	-->
 	<bean id="myPersistenceDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
- 		<property name="url" value="jdbc:postgresql://localhost:5432/postgres?currentSchema=omop_v5" />
+ 		<!-- <property name="url" value="jdbc:postgresql://localhost:5432/postgres?currentSchema=omop_v5" />
 		<property name="driverClassName" value="org.postgresql.Driver"></property>
 		<property name="username" value="omop_v5"/>
-		<property name="password" value="i3lworks"/>
+		<property name="password" value="i3lworks"/> -->
+			<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+			<property name="url" value="jdbc:sqlserver://ITS-AM-ITHS;databaseName=uzOMOP;integratedSecurity=true;" />
+			<property name="username" value="dummy" />
+			<property name="password" value="dummy" />
 	</bean>
 	
 	<!--
@@ -39,12 +43,12 @@
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<property name="generateDdl" value="true" />
-				<property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect" />
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
 			</bean>
 		</property>
 		<property name="jpaProperties">
 			<props>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">none</prop>
 				<prop key="hibernate.show_sql">true</prop>
 			</props>
 		</property>

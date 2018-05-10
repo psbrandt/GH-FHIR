@@ -61,7 +61,7 @@ public class VisitOccurrence extends BaseResourceEntity {
 	public static final String RES_TYPE = "Encounter";
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="visit_seq_gen")
+	@GeneratedValue(strategy=GenerationType.AUTO, generator="visit_seq_gen")
 	@SequenceGenerator(name="visit_seq_gen", sequenceName="visit_occurrence_id_seq", allocationSize=1)
 	@Column(name="visit_occurrence_id")
 	@Access(AccessType.PROPERTY)
@@ -69,7 +69,7 @@ public class VisitOccurrence extends BaseResourceEntity {
 	
 	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="person_id", nullable=false)
-	private PersonComplement person;
+	private Person person;
 	
 	@ManyToOne(cascade={CascadeType.MERGE})
 	@JoinColumn(name="visit_concept_id")
@@ -114,7 +114,7 @@ public class VisitOccurrence extends BaseResourceEntity {
 		this.visitConcept.setId(0L);
 	}
 	
-	public VisitOccurrence(Long id, PersonComplement person, Concept visitConcept, Date startDate, 
+	public VisitOccurrence(Long id, Person person, Concept visitConcept, Date startDate, 
 			String startTime, Date endDate, String endTime, Concept visitTypeConcept, 
 			Provider provider, CareSite careSite, String visitSourceValue, Concept visitSourceConcept) {
 		super();
@@ -133,11 +133,11 @@ public class VisitOccurrence extends BaseResourceEntity {
 		this.visitSourceConcept = visitSourceConcept;
 	}
 	
-	public PersonComplement getPerson() {
+	public Person getPerson() {
 		return person;
 	}
 	
-	public void setPerson(PersonComplement person) {
+	public void setPerson(Person person) {
 		this.person = person;
 	}
 	
@@ -253,7 +253,7 @@ public class VisitOccurrence extends BaseResourceEntity {
 		ResourceReferenceDt patientReference = (ResourceReferenceDt) encounter.getPatient();
 		if (patientReference == null) return null; // We have to have a patient
 
-		PersonComplement person = PersonComplement.searchAndUpdate(patientReference);
+		Person person = Person.searchAndUpdate(patientReference);
 		if (person == null) return null; // We must have a patient
 
 		this.setPerson(person);
@@ -274,14 +274,14 @@ public class VisitOccurrence extends BaseResourceEntity {
 //		Long patientRef = patientReference.getReference().getIdPartAsLong();
 //		if(patientRef != null){
 //			// We have person reference. We have to make sure if this patient exists.
-//			PersonComplement patientClass = (PersonComplement) OmopConceptMapping.getInstance().loadEntityById(PersonComplement.class, patientRef);
+//			Person patientClass = (Person) OmopConceptMapping.getInstance().loadEntityById(Person.class, patientRef);
 //			if (patientClass != null) {
 //				this.setPerson(patientClass);
 //			} else {
 //				// Before we need to create one, let's see if we have received this before.
-//				patientClass = (PersonComplement) OmopConceptMapping.getInstance().loadEntityBySource(PersonComplement.class, "PersonComplement", "personSourceValue", patientRef.toString());
+//				patientClass = (Person) OmopConceptMapping.getInstance().loadEntityBySource(Person.class, "Person", "personSourceValue", patientRef.toString());
 //				if (patientClass == null) {
-//					this.person = new PersonComplement();
+//					this.person = new Person();
 //					this.person.setPersonSourceValue(patientRef.toString());
 //					if (patientReference.getDisplay() != null)
 //						this.person.setNameFromString(patientReference.getDisplay().getValueAsString());
@@ -496,7 +496,7 @@ public class VisitOccurrence extends BaseResourceEntity {
 		return encounter;
 	}
 	
-	public static VisitOccurrence searchAndUpdate(Long encounterRef, Date startDate, Date endDate, PersonComplement person) {
+	public static VisitOccurrence searchAndUpdate(Long encounterRef, Date startDate, Date endDate, Person person) {
 		if (encounterRef == null) return null;
 		
 		// See if this exists.
